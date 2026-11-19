@@ -93,6 +93,10 @@ export function urlWhatsApp(nomor, teks) {
   return `https://wa.me/${nomor}?text=${encodeURIComponent(teks)}`;
 }
 
+export function urlWhatsAppRfq(daftar, id, config) {
+  return urlWhatsApp(config.waSales, susunPesan(daftar, id, config));
+}
+
 export function urlEmail(daftar, id, config) {
   const atasNama = id.tipe === 'perusahaan' ? id.perusahaan.trim() : id.nama.trim();
   const subject = `Permintaan penawaran — ${atasNama}`;

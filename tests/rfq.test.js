@@ -8,6 +8,7 @@ import {
   validasiRfq,
   susunPesan,
   urlWhatsApp,
+  urlWhatsAppRfq,
   urlEmail,
   cariProduk,
 } from '../demo/js/rfq.js';
@@ -180,6 +181,15 @@ describe('urlWhatsApp', () => {
     const encoded = url.split('?text=')[1];
     expect(encoded).not.toMatch(/[\s&]/);
     expect(decodeURIComponent(encoded)).toBe(teks);
+  });
+});
+
+describe('urlWhatsAppRfq', () => {
+  it('membangun URL dari daftar, identitas, dan nomor sales di konfigurasi', () => {
+    const daftar = ubahJumlah(tambahItem([], pipa), 'pipa', '30');
+    const url = urlWhatsAppRfq(daftar, identitasPerusahaan, config);
+    expect(url.startsWith(`https://wa.me/${config.waSales}?text=`)).toBe(true);
+    expect(decodeURIComponent(url.split('?text=')[1])).toBe(susunPesan(daftar, identitasPerusahaan, config));
   });
 });
 

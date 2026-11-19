@@ -8,9 +8,17 @@ import {
   validasiRfq,
   susunPesan,
   urlWhatsApp,
+  urlWhatsAppRfq,
   urlEmail,
   cariProduk,
 } from './rfq.js';
+
+// Label & warna Status Suplai, dipakai tabel desktop dan kartu HP
+const STATUS_SUPLAI = {
+  ready: { label: 'Ready stock gudang', kelas: 'bg-emerald-50 text-emerald-800' },
+  partai: { label: 'Siap kirim partai besar', kelas: 'bg-[#EEF3FF] text-[#1E3A8A]' },
+  indent: { label: 'Indent', kelas: 'bg-orange-50 text-orange-800' },
+};
 
 // Urutan fokus saat ada error: ikuti urutan field di form
 const URUTAN_ERROR = [
@@ -51,6 +59,9 @@ Alpine.data('landing', () => ({
   // ---------- Katalog ----------
   get hasil() {
     return cariProduk(this.produk, { kata: this.kata, kategori: this.kategori });
+  },
+  statusSuplai(p) {
+    return STATUS_SUPLAI[p.status];
   },
   sudahAda(id) {
     return this.daftar.some((i) => i.id === id);
@@ -93,7 +104,7 @@ Alpine.data('landing', () => ({
     return false;
   },
   kirimWhatsApp() {
-    if (this.siapKirim()) window.open(urlWhatsApp(config.waSales, this.pesan), '_blank', 'noopener');
+    if (this.siapKirim()) window.open(urlWhatsAppRfq(this.daftar, this.identitas, config), '_blank', 'noopener');
   },
   kirimEmail() {
     if (this.siapKirim()) window.location.href = urlEmail(this.daftar, this.identitas, config);
