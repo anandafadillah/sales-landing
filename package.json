@@ -1,0 +1,14 @@
+{
+  "name": "sales-landing",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes serve demo -l 5173",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pdf": "python3 tools/buat_katalog_pdf.py"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.0"
+  }
+}
